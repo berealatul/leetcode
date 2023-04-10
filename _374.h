@@ -11,12 +11,9 @@ using namespace std;
  * int guess(int num);
  */
 
-int guess(int num) {
-    if (num > 6) return -1;
-    if (num < 6) return 1;
-    return 0;
-}
+int guess(int num);
 
+// recursive method
 class Solution {
 public:
     int guessNumber(int n) {
@@ -24,14 +21,30 @@ public:
     }
 private:
     int guessNumber(int start, int end) {
-
-        if (!guess(start)) return start;
-        if (!guess(end)) return end;
-
         int middle = (static_cast<long>(start) + end) / 2;
+        int val = guess(middle);
 
-        if (!guess(middle)) return middle;
-        if (guess(middle) < 0) return guessNumber(start, middle);
-        return guessNumber(middle, end);
+        if (!val) return middle;
+
+        if (val < 0) return guessNumber(start, middle - 1);
+        return guessNumber(middle + 1, end);
+    }
+};
+
+// iterative method
+class Solution {
+public:
+    int guessNumber(int n) {
+        int start = 1;
+        int middle;
+        while (start <= n) {
+            middle = (start + n) / 2;
+            int val = guess(middle);
+
+            if (!val) break;
+            if (val < 0) n = middle - 1;
+            else start = middle + 1;
+        }
+        return middle;
     }
 };

@@ -5,26 +5,22 @@ using namespace std;
 class Solution {
 public:
     vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
-        oldColor = image[sr][sc];
-        newColor = color;
-        if (oldColor == newColor) return image;
+        if (image[sr][sc] == color) return image;
 
-        dfs(sr, sc, image);
-
+        dfs(image, sr, sc, color, image[sr][sc]);
         return image;
     }
 private:
-    int oldColor, newColor;
-    void dfs(int i, int j, vector<vector<int>>& grid) {
-        if (i < 0 || j < 0 || i >= grid.size() || j >= grid[0].size() || grid[i][j] != oldColor) return;
+    void dfs(vector<vector<int>>& image, int i, int j, int newColor, int oldColor) {
+        if (i < 0 || j < 0 || i >= image.size() || j >= image[0].size() || image[i][j] != oldColor) return;
 
-        grid[i][j] = newColor;
+        image[i][j] = newColor;
 
-        const short directions = 4;
-        const short x[directions] = { 1, -1, 0, 0 };
-        const short y[directions] = { 0, 0, 1, -1 };
-        for (short k = 0; k < directions; k++) {
-            dfs(i + x[k], j + y[k], grid);
+        const int direction = 4;
+        int x[direction] = { 1, -1, 0, 0 };
+        int y[direction] = { 0, 0, 1, -1 };
+        for (int k = 0; k < direction; k++) {
+            dfs(image, i + x[k], j + y[k], newColor, oldColor);
         }
     }
 };

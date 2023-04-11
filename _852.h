@@ -7,7 +7,7 @@ public:
     int peakIndexInMountainArray(vector<int>& arr) {
         int start = 0, end = arr.size() - 1;
         int middle;
-        while (start <= end) {
+        while (start < end) {
             middle = (static_cast<long>(start) + end) / 2;
 
             if (arr[middle] > arr[middle - 1] && arr[middle] > arr[middle + 1]) return middle;

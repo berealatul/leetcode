@@ -5,19 +5,20 @@ using namespace std;
 class Solution {
 public:
     vector<vector<int>> generate(int numRows) {
-        vector<vector<int>> answer;
-        for (int i = 1; i <= numRows; i++) {
-            vector<int> buffer;
-            for (int j = 1; i <= i; i++) {
-                buffer.push_back(findPascalElement(i, j));
-            }
-            answer.push_back(buffer);
-        }
-        return answer;
-    }
+        vector<vector<int>> ans;
+        ans.push_back({ 1 });
+        if (numRows < 2) return ans;
 
-    int findPascalElement(int i, int j) {
-        if (j == 1 || i == j) return 1;
-        return findPascalElement(i - 1, j - 1) + findPascalElement(i - 1, j);
+        vector<int> last = { 1, 1 };
+        ans.push_back(last);
+
+        for (int i = 2; i < numRows; i++) {
+            for (int j = 1; j < i; j++) last[j] = ans.back()[j] + ans.back()[j - 1];
+            
+            last.push_back(1);
+            ans.push_back(last);
+        }
+
+        return ans;
     }
 };
